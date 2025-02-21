@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.10.12
+Created-By: 19.0.1+10-21 (Oracle Corporation)
+Built-By: Paolo Bucci
+Sealed: false
+Built-On: 2023-01-01 10:30:08
+
