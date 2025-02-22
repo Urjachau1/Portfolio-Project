@@ -49,6 +49,7 @@ to the tree diagram (you may remove this one as well):
 
 ## Assignment Learning Objectives
 
+
 Without learning objectives, there really is no clear reason why a particular
 assessment or activity exists. Therefore, to be completely transparent, here is
 what we're hoping you will learn through this particular aspect of the portfolio
@@ -157,15 +158,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Calendar Versioning](https://calver.org/) of
 the following form: YYYY.0M.0D.
 
-## YYYY.MM.DD
+## 2025.02.20
 
 ### Added
 
-- Designed a proof of concept for <!-- insert name of component here --> component
+- Designed a proof of concept for MoodTracker component.
+- Implemented an interactive console-based user interface using OSU's `SimpleReader1L` and `SimpleWriter1L`.
+- Developed mood logging system with four predefined moods: Happy, Excited, Sad, and Stressed.
+- Created mood trend analysis to count and classify positive vs. negative moods.
+- Implemented mood history storage using `Queue1L`.
 
 ### Updated
 
-- Changed design to include ...
+- Modified `logMood` method to ensure users can only select from four predefined moods.
+- Updated `runMoodTracker` method to improve menu navigation and formatting
+- Ensured proper queue handling with `transferFrom(temp)` 
 
 ```
 
@@ -176,8 +183,6 @@ like to accomplish that, you will need to make GitHub releases after each pull
 request merge (or at least tag your commits). This is not required.
 
 ### Submission
-
-<!-- TODO: read the submission instructions then delete this comment -->
 
 Assuming that your project is in a GitHub repo somewhere and your changes are on
 a proof-of-concept branch, then what we'll want you to do is create a pull
