@@ -186,11 +186,16 @@ public class MoodTracker {
      *          interactively
      */
     public void runMoodTracker() {
+        // Create input and output streams using OSU's SimpleReader and SimpleWriter
         SimpleReader in = new SimpleReader1L();
         SimpleWriter out = new SimpleWriter1L();
+
+        // Boolean flag to control the loop
         boolean running = true;
 
+        // Loop until the user chooses to exit
         while (running) {
+            // Display the menu options
             out.println("Mood Tracker Menu:");
             out.println("1. Log Mood");
             out.println("2. View Mood History");
@@ -198,31 +203,40 @@ public class MoodTracker {
             out.println("4. Remove Oldest Mood Entry");
             out.println("5. Exit");
             out.print("Choose an option: ");
+
+            // Get user choice
             int choice = in.nextInteger();
 
+            // Option 1: Log a new mood
             if (choice == 1) {
                 out.print("Enter your mood (happy, sad, stressed, excited): ");
-                String mood = in.nextLine();
+                String mood = in.nextLine(); // Get mood input
                 out.print("Enter a note (optional): ");
-                String note = in.nextLine();
-                this.logMood(mood, note);
+                String note = in.nextLine(); // Get optional note input
+                this.logMood(mood, note); // Log the mood
                 out.println("Mood logged successfully!");
-            } else {
+
+            } else { // Handle other options
                 if (choice == 2) {
+                    // Option 2: Display the mood history
                     this.displayMoodHistory(out);
                 } else {
                     if (choice == 3) {
+                        // Option 3: Analyze mood trends
                         this.analyzeMoodTrends(out);
                     } else {
                         if (choice == 4) {
+                            // Option 4: Remove the oldest mood entry
                             this.removeLog();
                             out.println("Oldest mood entry removed.");
                         } else {
                             if (choice == 5) {
+                                // Option 5: Exit the tracker
                                 out.println(
                                         "Exiting Mood Tracker. Have a great day!");
-                                running = false;
+                                running = false; // Set flag to false to stop the loop
                             } else {
+                                // Handle invalid input
                                 out.println(
                                         "Invalid choice. Please try again.");
                             }
@@ -231,6 +245,8 @@ public class MoodTracker {
                 }
             }
         }
+
+        // Close input and output streams
         in.close();
         out.close();
     }
