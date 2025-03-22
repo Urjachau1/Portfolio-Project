@@ -1,8 +1,8 @@
 # Portfolio Part 3: Component Interfaces
 
-- **Name**: <!-- TODO: fill with first and last name (e.g., Brutus Buckeye) and delete this comment -->
-- **Dot Number**: <!-- TODO: fill with OSU dot number (e.g., buckeye.17) and delete this comment -->
-- **Due Date**: <!-- TODO: fill out with due date and time (e.g., 10/17 @ 3:10 PM EST) and delete this comment -->
+- **Name**: Urja Chauhan
+- **Dot Number**: chauhan.147
+- **Due Date**: 03/03/2025
 
 ## Assignment Overview
 
@@ -43,8 +43,6 @@ component to be able to do? Now that you've had a chance to create a
 proof-of-concept, you should be able to answer this question to some extent.
 
 ## Assignment Checklist
-
-<!-- TODO: browse the checklist then delete this comment -->
 
 To be sure you have completed everything on this assignment, we have littered
 this document with TODO comments. You can browse all of them in VSCode by
@@ -132,7 +130,37 @@ hierarchy diagram using whatever tools you would like. Then, include a picture
 of it in this folder. You may also embed it just below using markdown syntax
 (i.e., `![ALT TEXT](path/to/file)`).
 
-<!-- TODO: make a diagram of your component hierarchy then delete this comment -->
+                           ┌────────────────────┐
+                           │   Standard<T>     │
+                           │ (OSU Component)   │
+                           └────────▲──────────┘
+                                    │
+                                    │
+                        ┌──────────────────────────┐
+                        │ MoodTrackerKernel        │
+                        │ (Kernel Interface)       │
+                        │ - logMood(String, String)│
+                        │ - removeLog()            │
+                        │ - numberOfLogs(): int    │
+                        └────────▲────────────────┘
+                                 │
+                                 │
+                     ┌──────────────────────────┐
+                     │     MoodTracker          │
+                     │ (Enhanced Interface)     │
+                     │ - getMoodHistory(): Queue│
+                     │ - analyzeMoodTrends(): Str │
+                     └────────▲────────────────┘
+                                 │
+                                 │
+                  ┌───────────────────────────────┐
+                  │      MoodTracker1L            │
+                  │ (Implementation Class)        │
+                  │ - Implements MoodTracker      │
+                  │ - Uses OSU Queue1L for Data   │
+                  │ - Maintains FIFO Order        │
+                  │ - Avoids equalsIgnoreCase     │
+                  └──────────────────────────────┘
 
 To start making your interfaces, make a branch off of main in your new repo
 called something like `interfaces`. There are many ways to do this, but my
@@ -153,8 +181,6 @@ merges, you will need to pull the changes from main into your current branch
 to see them. If you don't like this workflow, you may try following the
 rebase strategies described [here](https://stackoverflow.com/questions/35790561/working-while-waiting-for-pending-pr)
 and [here](https://stackoverflow.com/questions/18021888/continue-working-on-a-git-branch-after-making-a-pull-request).
-
-<!-- TODO: make a new branch from main then delete this comment -->
 
 ## Assignment Tasks
 
@@ -192,15 +218,27 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Calendar Versioning](https://calver.org/) of
 the following form: YYYY.0M.0D.
 
-## YYYY.MM.DD
+## 2025.03.25
 
 ### Added
 
-- Designed kernel and enhanced interfaces for <!-- insert name of component here --> component
+- Designed **`MoodTrackerKernel`** interface to define the core mood tracking operations:
+  - `logMood(String mood, String note)`: Logs a mood entry.
+  - `removeLog()`: Removes the oldest mood entry.
+  - `numberOfLogs()`: Returns the number of stored mood entries.
+
+- Designed **`MoodTracker`** interface (enhanced functionality) to extend `MoodTrackerKernel`:
+  - `getMoodHistory()`: Retrieves a queue of past moods in FIFO order.
+  - `analyzeMoodTrends()`: Provides a formatted summary of positive vs. negative moods.
+
 
 ### Updated
 
-- Changed design to include ...
+- Refactored method placements based on feedback:
+  - **Moved `analyzeMoodTrends()` to the enhanced interface (`MoodTracker`)** instead of the kernel.
+  - **Separated `getMoodHistory()` from the kernel** to prevent aliasing issues and maintain encapsulation.
+  - **Ensured FIFO compliance** by structuring history retrieval methods around OSU's `Queue1L`.
+- Improved Javadoc comments to include **formal specifications (`@ensures`, `@requires`)** for all methods.
 
 ```
 
