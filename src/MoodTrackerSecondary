@@ -1,0 +1,144 @@
+import components.queue.Queue;
+import components.queue.Queue1L;
+
+/**
+ * Abstract class for the secondary methods of the MoodTracker component.
+ * Implements enhanced functionality using only kernel and standard methods.
+ *
+ * @author Urja Chauhan
+ */
+public abstract class MoodTrackerSecondary implements MoodTracker {
+
+    /**
+     * Returns a queue of mood entries (as Strings) in FIFO order.
+     *
+     * @return a Queue<String> containing the mood history.
+     * @requires this.numberOfLogs() > 0
+     * @ensures getMoodHistory contains all past mood entries in FIFO order
+     */
+    @Override
+    public Queue<String> getMoodHistory() {
+        // Create queues to store history and temporarily hold values
+        Queue<String> history = new Queue1L<>();
+        Queue<String> temp = new Queue1L<>();
+
+        // Dequeue each entry, save to both queues
+        int n = this.numberOfLogs();
+        for (int i = 0; i < n; i++) {
+            String entry = this.removeAndReturnOldestEntry();
+            history.enqueue(entry);
+            temp.enqueue(entry);
+        }
+
+        // Restore the original entries back into the tracker
+        for (int i = 0; i < n; i++) {
+            this.logMoodFromCopy(temp.dequeue());
+        }
+
+        return history;
+    }
+
+    /**
+     * Analyzes mood trends based on the number of positive and negative moods.
+     *
+     * @return a summary string of positive and negative mood counts
+     * @requires this.numberOfLogs() > 0
+     * @ensures analyzeMoodTrends returns a formatted string summary of mood stats
+     */
+    @Override
+    public String analyzeMoodTrends() {
+        // Counters for mood categories
+        int positiveCount = 0, negativeCount = 0;
+        Queue<String> temp = new Queue1L<>();
+
+        // Check each mood entry and categorize
+        int n = this.numberOfLogs();
+        for (int i = 0; i < n; i++) {
+            String entry = this.removeAndReturnOldestEntry();
+            temp.enqueue(entry);
+
+            String mood = toLowerCase(entry);
+            if (mood.contains("happy") || mood.contains("excited")) {
+                positiveCount++;
+            } else if (mood.contains("sad") || mood.contains("stressed")) {
+                negativeCount++;
+            }
+        }
+
+        // Restore the original entries
+        for (int i = 0; i < n; i++) {
+            this.logMoodFromCopy(temp.dequeue());
+        }
+
+        // Return mood analysis summary
+        return "Mood Analysis: Positive Moods = " + positiveCount
+                + ", Negative Moods = " + negativeCount;
+    }
+
+    /**
+     * Returns a formatted string listing all mood entries.
+     *
+     * @return formatted string with mood history
+     * @ensures toString = formatted string of all mood entries
+     */
+    @Override
+    public String toString() {
+        // Retrieve history and build formatted output
+        Queue<String> history = this.getMoodHistory();
+        String result = "Mood History:\n";
+        while (history.length() > 0) {
+            result += "- " + history.dequeue() + "\n";
+        }
+        return result;
+    }
+
+    /**
+     * Checks if another object is a MoodTracker with equal history.
+     *
+     * @param obj the object to compare
+     * @return true if the objects are equivalent
+     * @ensures equals = (this and obj have the same mood history)
+     */
+    @Override
+    public boolean equals(Object obj) {
+        // Check type and compare histories
+        if (!(obj instanceof MoodTracker)) {
+            return false;
+        }
+        MoodTracker other = (MoodTracker) obj;
+        return this.getMoodHistory().equals(other.getMoodHistory());
+    }
+
+    /**
+     * Helper method to remove and return the oldest entry as a String.
+     * This method is not part of the interface.
+     */
+    protected abstract String removeAndReturnOldestEntry();
+
+    /**
+     * Helper method to re-log a mood entry from a string copy.
+     * This method is not part of the interface.
+     */
+    protected abstract void logMoodFromCopy(String entry);
+
+    /**
+     * Converts a string to lowercase without using built-in toLowerCase or FormatChecker.
+     *
+     * @param str the string to convert
+     * @return the lowercase version of the string
+     * @requires str != null
+     * @ensures returns a new string where all uppercase letters are converted to lowercase
+     */
+    private String toLowerCase(String str) {
+        // Manually convert each character to lowercase if uppercase
+        String result = "";
+        for (int i = 0; i < str.length(); i++) {
+            char c = str.charAt(i);
+            if (c >= 'A' && c <= 'Z') {
+                c = (char) (c + ('a' - 'A'));
+            }
+            result += c;
+        }
+        return result;
+    }
+}
