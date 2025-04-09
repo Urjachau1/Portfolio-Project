@@ -1,0 +1,127 @@
+/**
+ * MoodTracker1L is the kernel implementation of the MoodTracker component.
+ * It stores mood entries using a Queue<String> in FIFO order.
+ *
+ * Convention:
+ * - The queue may only contain Strings added through logMood.
+ * - Each String represents one mood entry in the format "Mood: mood, Note: note"
+ * - The queue must maintain FIFO ordering.
+ *
+ * Correspondence:
+ * - Each element in the queue corresponds to a user-logged mood entry.
+ * - The order of elements reflects the order in which moods were logged.
+ */
+
+import components.queue.Queue;
+import components.queue.Queue1L;
+
+public class MoodTracker1L extends MoodTrackerSecondary {
+
+    private Queue<String> moodLog;
+
+    /**
+     * No-argument constructor.
+     *
+     * @ensures this.moodLog is initialized and empty
+     */
+    public MoodTracker1L() {
+        this.moodLog = new Queue1L<>();
+    }
+
+    /**
+     * Adds a mood and optional note to the tracker.
+     *
+     * @param mood the mood string to log
+     * @param note an optional note
+     * @updates this
+     * @ensures adds the mood and note entry to the end of the moodLog queue
+     */
+    @Override
+    public void logMood(String mood, String note) {
+        this.moodLog.enqueue("Mood: " + mood + ", Note: " + note);
+    }
+
+    /**
+     * Removes the oldest mood entry.
+     *
+     * @updates this
+     * @requires this.moodLog.length() > 0
+     * @ensures removes the front element from the queue
+     */
+    @Override
+    public void removeLog() {
+        this.moodLog.dequeue();
+    }
+
+    /**
+     * Returns the number of mood entries.
+     *
+     * @return the number of elements in the queue
+     * @ensures returns the size of the moodLog queue
+     */
+    @Override
+    public int numberOfLogs() {
+        return this.moodLog.length();
+    }
+
+    /**
+     * Clears the mood tracker.
+     *
+     * @updates this
+     * @ensures this is empty
+     */
+    @Override
+    public void clear() {
+        this.moodLog.clear();
+    }
+
+    /**
+     * Returns a new instance of MoodTracker1L.
+     *
+     * @return new empty MoodTracker1L
+     * @ensures returns a fresh MoodTracker1L object
+     */
+    @Override
+    public MoodTracker newInstance() {
+        return new MoodTracker1L();
+    }
+
+    /**
+     * Transfers all data from source to this object.
+     *
+     * @param source the source MoodTracker
+     * @updates this
+     * @clears source
+     * @requires source is of type MoodTracker1L
+     * @ensures this == #source and source is cleared
+     */
+    @Override
+    public void transferFrom(MoodTracker source) {
+        this.moodLog.transferFrom(((MoodTracker1L) source).moodLog);
+    }
+
+    /**
+     * Removes and returns the oldest entry (used in secondary methods).
+     *
+     * @return the string entry removed from the front of the queue
+     * @requires this.moodLog.length() > 0
+     * @updates this
+     * @ensures removes and returns front element of moodLog
+     */
+    @Override
+    protected String removeAndReturnOldestEntry() {
+        return this.moodLog.dequeue();
+    }
+
+    /**
+     * Adds an existing entry back into the mood tracker (used in secondary methods).
+     *
+     * @param entry the mood entry to re-add
+     * @updates this
+     * @ensures adds the entry to the end of the moodLog queue
+     */
+    @Override
+    protected void logMoodFromCopy(String entry) {
+        this.moodLog.enqueue(entry);
+    }
+}
