@@ -1,0 +1,37 @@
+import components.standard.Standard;
+
+/**
+ * Kernel interface for the MoodTracker component.
+ * Defines the minimal required operations for mood tracking.
+ *
+ * @param <T> The type representing the MoodTracker
+ * @ensures This component provides core mood tracking operations.
+ */
+public interface MoodTrackerKernel extends Standard<MoodTracker> {
+
+    /**
+     * Logs a mood entry into the tracker.
+     *
+     * @param mood The mood recorded (must be one of: Happy, Excited, Sad, Stressed).
+     * @param note An optional note describing the user's mood.
+     * @requires mood is "Happy", "Excited", "Sad", or "Stressed" AND note != null
+     * @ensures this contains a new mood entry at the end.
+     */
+    void logMood(String mood, String note);
+
+    /**
+     * Removes the oldest mood entry from the tracker.
+     *
+     * @requires this.numberOfLogs() > 0
+     * @ensures the oldest mood entry is removed from the tracker.
+     */
+    void removeLog();
+
+    /**
+     * Returns the total number of mood entries stored in the tracker.
+     *
+     * @return The number of mood entries currently stored.
+     * @ensures numberOfLogs = |this|
+     */
+    int numberOfLogs();
+}
