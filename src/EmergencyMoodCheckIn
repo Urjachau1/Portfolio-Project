@@ -1,0 +1,78 @@
+import components.moodtracker.MoodTracker;
+import components.moodtracker.MoodTracker1L;
+import components.simplereader.SimpleReader;
+import components.simplereader.SimpleReader1L;
+import components.simplewriter.SimpleWriter;
+import components.simplewriter.SimpleWriter1L;
+
+/**
+ * Use Case 3: Emergency Mood Check-In.
+ *
+ * Allows users to quickly log a high-intensity negative emotion,
+ * receive calming guidance, and optionally save the experience
+ * for future reflection.
+ *
+ * Author: Urja Chauhan
+ */
+public final class EmergencyMoodCheckIn {
+
+    /**
+     * Private constructor to prevent instantiation.
+     */
+    private EmergencyMoodCheckIn() {
+    }
+
+    /**
+     * Main method for running emergency check-in session.
+     *
+     * @param args command-line args (unused)
+     */
+    public static void main(String[] args) {
+        MoodTracker tracker = new MoodTracker1L();
+        SimpleReader in = new SimpleReader1L();
+        SimpleWriter out = new SimpleWriter1L();
+
+        out.println("\n🔴 Welcome to the Emergency Mood Check-In 🔴\n");
+        out.print("Please enter how you're feeling (panic, sad, overwhelmed): ");
+        String mood = in.nextLine();
+
+        out.print("Would you like to talk about it? (press enter to skip): ");
+        String note = in.nextLine();
+
+        // Provide immediate support tips
+        out.println("\nWe're here for you ❤️");
+        if (mood.equals("panic")) {
+            out.println("Try this calming exercise: 4-7-8 Breathing 🌬");
+            out.println("- Inhale for 4 seconds");
+            out.println("- Hold for 7 seconds");
+            out.println("- Exhale for 8 seconds");
+            out.println("Repeat 3 times while sitting comfortably.\n");
+        } else if (mood.equals("overwhelmed")) {
+            out.println("When feeling overwhelmed, try these tips:");
+            out.println("- Break tasks into smaller chunks and focus on one at a time.");
+            out.println("- Take a short walk or remove yourself from the environment.");
+            out.println("- Prioritize deep breathing: in for 5, out for 5.");
+            out.println("- Say this to yourself: 'I don't have to do everything right now.'\n");
+        } else if (mood.equals("sad")) {
+            out.println("Tip: Let it out. Crying is okay. You're not alone. ❤️");
+            out.println("Write down how you feel or talk to someone you trust.\n");
+        } else {
+            out.println("Reminder: All feelings are valid. You're doing your best. 💛\n");
+        }
+
+        // Optional save
+        out.print("Would you like to log this mood for future reflection? (yes/no): ");
+        String response = in.nextLine();
+        if (response.equals("yes")) {
+            tracker.logMood(mood, note);
+            out.println("Mood logged successfully. 📓\n");
+        } else {
+            out.println("That's okay. Take care of yourself 💖\n");
+        }
+
+        out.println("Thank you for checking in. You are not alone. 🤝\n");
+
+        out.close();
+        in.close();
+    }
+}
