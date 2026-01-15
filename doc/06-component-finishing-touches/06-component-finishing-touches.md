@@ -1,8 +1,8 @@
 # Portfolio Part 6: Finishing Touches
 
-- **Name**: <!-- TODO: fill with first and last name (e.g., Brutus Buckeye) and delete this comment -->
-- **Dot Number**: <!-- TODO: fill with OSU dot number (e.g., buckeye.17) and delete this comment -->
-- **Due Date**: <!-- TODO: fill out with due date and time (e.g., 10/17 @ 3:10 PM EST) and delete this comment -->
+- **Name**: Urja Chauhan
+- **Dot Number**: chauhan.147
+- **Due Date**: 04/18/2025
 
 ## Assignment Overview
 
@@ -49,8 +49,6 @@ Many of these additional techniques are somewhat out of the scope of this
 course, but just knowing about them could set you up for long term success.
 
 ## Assignment Checklist
-
-<!-- TODO: browse the checklist then delete this comment -->
 
 To be sure you have completed everything on this assignment, we have littered
 this document with TODO comments. You can browse all of them in VSCode by
@@ -140,8 +138,6 @@ merges, you will need to pull the changes from main into your current branch
 to see them. If you don't like this workflow, you may try following the
 rebase strategies described [here](https://stackoverflow.com/questions/35790561/working-while-waiting-for-pending-pr)
 and [here](https://stackoverflow.com/questions/18021888/continue-working-on-a-git-branch-after-making-a-pull-request).
-
-<!-- TODO: make a new branch from main then delete this comment -->
 
 ## Assignment Tasks
 
@@ -307,18 +303,18 @@ Take some time to fill them out honestly.
 > complete the portfolio project, how much better (or worse) do you think you
 > understand software development and why?
 
-<!-- TODO: discuss -->
+I feel like I have a much better understanding of real-world software development now. The portfolio project pushed me to go beyond writing code that “just works.” I had to consider things like interface design, documentation, component abstraction, testing, version control, and even user experience. Developing something from scratch and refining it over time, while considering user needs, felt much closer to what I imagine actual development cycles are like in the industry.
 
 > Also, did the portfolio project surface any gaps in your own knowledge of
 > software development. If so, what are those gaps and how did you address them?
 
-<!-- TODO: discuss -->
+Yes, it revealed some areas I needed to improve—like understanding kernel purity and contract design (e.g., @requires, @ensures). Early on, I struggled with separating kernel and secondary responsibilities correctly. I addressed this by reworking my method contracts, asking clarifying questions, and getting feedback throughout each part of the project. It also helped me better understand how abstraction layers work.
 
 > Finally, as a part of completing the portfolio project, to what extent has
 > your perspective of software development changed, if at all? In other words,
 > is software development something you still enjoy? If not, why not?
 
-<!-- TODO: discuss -->
+My perspective has definitely matured. I used to think of software development as just solving technical problems, but now I see it more as designing experiences. I enjoy it even more now, especially when I’m creating tools that can help real people. Working on the MoodTracker and building interactive use cases reminded me that software can be both functional and compassionate.
 
 > One of the challenges of completing the portfolio project is picking up a lot
 > of skills on your own. Some of these skills are, of course, software skills.
@@ -326,29 +322,61 @@ Take some time to fill them out honestly.
 > this process. Therefore, the first question is what skills did you pick up
 > through this process?
 
-<!-- TODO: discuss -->
+Writing detailed Javadoc using formal contracts like @requires and @ensures
+
+Designing and implementing multi-layered components
+
+Structuring GitHub projects using branches and changelogs
+
+Testing without a reference implementation
+
+Translating user goals into reusable components
 
 > The follow-up question is: could you rephrase these skills you picked up
 > as bullet points that you could put on a resume? Try it below.
 
-<!-- TODO: discuss -->
+Designed and implemented a reusable MoodTracker software component following formal software engineering discipline (OSU S.S.D)
+
+Authored kernel and secondary interfaces, abstract class, and kernel implementation using Java and OSU components
+
+Developed automated JUnit test suites and conducted full component testing without reference implementation
+
+Documented component with formal specifications using design-by-contract notation
+
+Managed version-controlled development using GitHub branches and pull requests
 
 > Next, how has working on this project affected your career trajectory?
 > In other words, do you now hate the topic you picked? Or, are you even more
 > interested in it? Both outcomes are valuable to your personal development.
 
-<!-- TODO: discuss -->
+I’m even more interested in this area. Combining mental health support with software development gave me purpose while coding. I liked being able to create something user-facing that also encouraged emotional self-awareness. It made me want to explore HCI (human-computer interaction), software design ethics, or even apps that support wellbeing in high-pressure environments like education or cybersecurity.
 
 > Finally, consider the skills you've picked up and your current career
 > trajectory. What are some things you could do to continue on your
 > career trajectory? Also, who are some mentors you could contact to help
 > you stay on your path?
 
-<!-- TODO: discuss -->
+To continue on this path, I’d like to:
+
+Turn MoodTracker into a more robust web app using a modern JavaScript framework
+
+Research how tech is used in emotional/mental health intervention tools
+
+Intern at companies or labs that work at the intersection of mental health and technology
+
+Reach out to professors working in HCI, accessibility, or design for wellness
+
+Attend talks or join communities focused on ethical tech and mental health
+
+Some mentors I could approach are:
+
+CSE professors at OSU familiar with UX or behavioral software
+
+A mental health professional who’s interested in digital interventions
+
+Former instructors or TAs who helped guide my project and provided feedback
 
 ### Changelog
-
-<!-- TODO: update CHANGELOG then delete this comment -->
 
 At the end of every assignment, you should update the
 [CHANGELOG.md](../../CHANGELOG.md) file found in the root of the project folder.
@@ -363,16 +391,22 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Calendar Versioning](https://calver.org/) of
 the following form: YYYY.0M.0D.
 
-## YYYY.MM.DD
+## 2025.04.18
 
 ### Added
 
-- Designed test suite for <!-- insert name of component here --> component
-- Designed two different use cases for <!-- insert name of component here --> component
+- Designed test suite for MoodTracker component using JUnit
+- Created three interactive, user-based use cases for MoodTracker:
+  - DailyMoodLogger
+  - WeeklyMoodTrends
+  - EmergencyMoodCheckIn
+- Wrote detailed developer reflection summarizing growth and takeaways
+- Provided breathing tips and wellness prompts for negative moods
 
 ### Updated
 
-- Changed design to include ...
+- Polished codebase with improved comments, naming, and structure
+- Enhanced user interaction flow in all use cases
 
 ```
 
@@ -383,8 +417,6 @@ like to accomplish that, you will need to make GitHub releases after each pull
 request merge (or at least tag your commits). This is not required.
 
 ### Submission
-
-<!-- TODO: read the submission instructions then delete this comment -->
 
 Assuming that your project is in a GitHub repo somewhere and your changes are on
 a proof-of-concept branch, then what we'll want you to do is create a pull

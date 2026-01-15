@@ -1,0 +1,85 @@
+import components.moodtracker.MoodTracker;
+import components.moodtracker.MoodTracker1L;
+import components.simplereader.SimpleReader;
+import components.simplereader.SimpleReader1L;
+import components.simplewriter.SimpleWriter;
+import components.simplewriter.SimpleWriter1L;
+
+/**
+ * Use Case 1: Daily Mood Reflection Assistant
+ *
+ * Description:
+ * Simulates a user-driven mental health journaling experience.
+ * Allows users to log a mood, explain why they feel that way,
+ * and receive mental health tips if the mood is negative.
+ *
+ * Author: Urja Chauhan
+ */
+public final class DailyMoodReflectionAssistant {
+
+    /**
+     * Private constructor to prevent instantiation.
+     */
+    private DailyMoodReflectionAssistant() {
+    }
+
+    /**
+     * Main method to run the interactive journaling experience.
+     *
+     * @param args the command line arguments (not used)
+     */
+    public static void main(String[] args) {
+        MoodTracker tracker = new MoodTracker1L();
+        SimpleReader in = new SimpleReader1L();
+        SimpleWriter out = new SimpleWriter1L();
+
+        out.println("Welcome to your Interactive Mood Journal ✨");
+        out.println("You can log how you feel today, reflect, and receive support.\n");
+
+        boolean running = true;
+        while (running) {
+            out.println("===== Menu =====");
+            out.println("1. Log mood entry");
+            out.println("2. View mood history");
+            out.println("3. Analyze mood trends");
+            out.println("4. Exit");
+            out.print("Choose an option: ");
+            int choice = in.nextInteger();
+
+            if (choice == 1) {
+                out.print("Enter your current mood (happy, sad, stressed, excited): ");
+                String mood = in.nextLine();
+
+                out.print("Would you like to share why you feel this way? ");
+                String note = in.nextLine();
+
+                tracker.logMood(mood, note);
+                out.println("Mood logged successfully!\n");
+
+                if (mood.equals("sad")) {
+                    out.println("🌧 Tip: Talk to someone you trust or write more about what’s bothering you.");
+                } else if (mood.equals("stressed")) {
+                    out.println("💆 Tip: Take a break, stretch, or go for a walk. You've got this!");
+                }
+
+            } else if (choice == 2) {
+                out.println("\nYour Mood History:");
+                out.println(tracker);
+
+            } else if (choice == 3) {
+                out.println("\nMood Trends:");
+                out.println(tracker.analyzeMoodTrends());
+
+            } else if (choice == 4) {
+                out.println("Goodbye! Remember to check in with yourself often. 💖");
+                running = false;
+
+            } else {
+                out.println("Invalid choice. Please enter a number between 1 and 4.\n");
+            }
+        }
+
+        in.close();
+        out.close();
+    }
+}

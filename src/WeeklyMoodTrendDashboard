@@ -1,0 +1,121 @@
+import components.moodtracker.MoodTracker;
+import components.moodtracker.MoodTracker1L;
+import components.simplereader.SimpleReader;
+import components.simplereader.SimpleReader1L;
+import components.simplewriter.SimpleWriter;
+import components.simplewriter.SimpleWriter1L;
+
+/**
+ * Use Case 2: Weekly Mood Trend Dashboard
+ *
+ * Allows the user to log a mood each day for 7 days, then
+ * outputs a frequency chart showing mood trends and offers
+ * tips based on weekly emotional patterns.
+ *
+ * Author: Urja Chauhan
+ */
+public final class WeeklyMoodTrendDashboard {
+
+    /**
+     * Private constructor to prevent instantiation.
+     */
+    private WeeklyMoodTrendDashboard() {
+    }
+
+    /**
+     * Outputs a text-based frequency chart of mood counts.
+     *
+     * @param out output stream
+     * @param happy number of happy days
+     * @param sad number of sad days
+     * @param stressed number of stressed days
+     * @param excited number of excited days
+     */
+    private static void printMoodChart(SimpleWriter out, int happy, int sad,
+            int stressed, int excited) {
+        out.println("\nMood Frequency Over 7 Days");
+        out.println("---------------------------");
+        out.print("happy    | ");
+        for (int i = 0; i < happy; i++) {
+            out.print("█");
+        }
+        out.println();
+
+        out.print("sad      | ");
+        for (int i = 0; i < sad; i++) {
+            out.print("█");
+        }
+        out.println();
+
+        out.print("stressed | ");
+        for (int i = 0; i < stressed; i++) {
+            out.print("█");
+        }
+        out.println();
+
+        out.print("excited  | ");
+        for (int i = 0; i < excited; i++) {
+            out.print("█");
+        }
+        out.println();
+        out.println("---------------------------\n");
+    }
+
+    /**
+     * Main method for running the weekly dashboard.
+     *
+     * @param args command-line args
+     */
+    public static void main(String[] args) {
+        MoodTracker tracker = new MoodTracker1L();
+        SimpleReader in = new SimpleReader1L();
+        SimpleWriter out = new SimpleWriter1L();
+
+        int happy = 0, sad = 0, stressed = 0, excited = 0;
+
+        out.println("Welcome to your Weekly Mood Tracker 🗓\n");
+        out.println("Log your mood once per day for 7 days.\n");
+
+        for (int day = 1; day <= 7; day++) {
+            out.println("Day " + day + ":");
+            out.print("How do you feel today (happy, sad, stressed, excited)? ");
+            String mood = in.nextLine();
+
+            out.print("Why do you feel this way? ");
+            String note = in.nextLine();
+
+            tracker.logMood(mood, note);
+
+            // Tally moods
+            if (mood.equals("happy")) {
+                happy++;
+            } else if (mood.equals("sad")) {
+                sad++;
+            } else if (mood.equals("stressed")) {
+                stressed++;
+            } else if (mood.equals("excited")) {
+                excited++;
+            } else {
+                out.println("(Note: mood not recognized. It was still logged.)");
+            }
+            out.println();
+        }
+
+        printMoodChart(out, happy, sad, stressed, excited);
+
+        // Analyze mood trend
+        if (happy + excited > sad + stressed) {
+            out.println("Overall Trend: Positive mood increasing 🌟");
+            out.println("Keep it up! Reflect on what made you feel good this week.");
+        } else if (sad + stressed > happy + excited) {
+            out.println("Overall Trend: Challenging week 💭");
+            out.println("Tip: Consider small breaks, journaling, or talking to someone you trust.");
+        } else {
+            out.println("Overall Trend: Balanced mood 💡");
+            out.println("Tip: Keep tracking your mood to identify subtle changes over time.");
+        }
+
+        out.close();
+        in.close();
+    }
+}

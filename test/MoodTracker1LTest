@@ -1,0 +1,82 @@
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+import components.moodtracker.MoodTracker;
+import components.moodtracker.MoodTracker1L;
+
+/**
+ * Test class for the kernel methods of MoodTracker1L.
+ * Verifies core functionality: logging, removing, clearing, and transferring moods.
+ * Assumes that the internal state is modeled as a FIFO queue of Strings.
+ *
+ * Author: Urja
+ */
+public class MoodTracker1LTest {
+
+    @Test
+    public void testLogMoodAddsEntry() {
+        MoodTracker tracker = new MoodTracker1L();
+        tracker.logMood("happy", "Felt great today!");
+        assertEquals(1, tracker.numberOfLogs());
+    }
+
+    @Test
+    public void testMultipleLogs() {
+        MoodTracker tracker = new MoodTracker1L();
+        tracker.logMood("happy", "morning walk");
+        tracker.logMood("sad", "missed bus");
+        tracker.logMood("stressed", "exam coming up");
+        assertEquals(3, tracker.numberOfLogs());
+    }
+
+    @Test
+    public void testRemoveLog() {
+        MoodTracker tracker = new MoodTracker1L();
+        tracker.logMood("stressed", "Too many deadlines");
+        tracker.removeLog();
+        assertEquals(0, tracker.numberOfLogs());
+    }
+
+    @Test
+    public void testRemoveFromEmptyDoesNothing() {
+        MoodTracker tracker = new MoodTracker1L();
+        tracker.removeLog();
+        assertEquals(0, tracker.numberOfLogs());
+    }
+
+    @Test
+    public void testClear() {
+        MoodTracker tracker = new MoodTracker1L();
+        tracker.logMood("sad", "Bad weather");
+        tracker.clear();
+        assertEquals(0, tracker.numberOfLogs());
+    }
+
+    @Test
+    public void testNewInstanceIsEmpty() {
+        MoodTracker tracker = new MoodTracker1L();
+        MoodTracker newTracker = tracker.newInstance();
+        assertEquals(0, newTracker.numberOfLogs());
+    }
+
+    @Test
+    public void testTransferFromMovesData() {
+        MoodTracker source = new MoodTracker1L();
+        source.logMood("excited", "Going on vacation!");
+        MoodTracker destination = new MoodTracker1L();
+        destination.transferFrom(source);
+        assertEquals(1, destination.numberOfLogs());
+        assertEquals(0, source.numberOfLogs());
+    }
+
+    @Test
+    public void testTransferFromEmptySource() {
+        MoodTracker source = new MoodTracker1L();
+        MoodTracker destination = new MoodTracker1L();
+        destination.logMood("happy", "already logged");
+        destination.transferFrom(source);
+        assertEquals(0, source.numberOfLogs());
+        assertEquals(0, destination.numberOfLogs());
+    }
+}

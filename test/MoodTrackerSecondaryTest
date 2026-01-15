@@ -1,0 +1,103 @@
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+import components.moodtracker.MoodTracker;
+import components.moodtracker.MoodTracker1L;
+
+import components.queue.Queue;
+
+/**
+ * Test class for the secondary methods of the MoodTracker component.
+ * Focuses on testing behavior from the abstract class MoodTrackerSecondary.
+ * Includes methods like getMoodHistory, analyzeMoodTrends, toString, equals.
+ * Assumes FIFO ordering and string formatting.
+ *
+ * Author: Urja
+ */
+public class MoodTrackerSecondaryTest {
+
+    @Test
+    public void testGetMoodHistory() {
+        MoodTracker tracker = new MoodTracker1L();
+        tracker.logMood("happy", "good morning");
+        tracker.logMood("sad", "not feeling great");
+        Queue<String> history = tracker.getMoodHistory();
+        assertEquals(2, history.length());
+        assertTrue(history.dequeue().contains("happy"));
+        assertTrue(history.dequeue().contains("sad"));
+    }
+
+    @Test
+    public void testGetMoodHistoryAfterClear() {
+        MoodTracker tracker = new MoodTracker1L();
+        tracker.logMood("excited", "new playlist");
+        tracker.clear();
+        Queue<String> history = tracker.getMoodHistory();
+        assertEquals(0, history.length());
+    }
+
+    @Test
+    public void testAnalyzeMoodTrends() {
+        MoodTracker tracker = new MoodTracker1L();
+        tracker.logMood("happy", "got enough sleep");
+        tracker.logMood("excited", "got the internship!");
+        tracker.logMood("sad", "forgot lunch");
+        String analysis = tracker.analyzeMoodTrends();
+        assertTrue(analysis.contains("Positive Moods = 2"));
+        assertTrue(analysis.contains("Negative Moods = 1"));
+    }
+
+    @Test
+    public void testAnalyzeOnlyNegativeMoods() {
+        MoodTracker tracker = new MoodTracker1L();
+        tracker.logMood("sad", "missed exam");
+        tracker.logMood("stressed", "behind on project");
+        String analysis = tracker.analyzeMoodTrends();
+        assertTrue(analysis.contains("Positive Moods = 0"));
+        assertTrue(analysis.contains("Negative Moods = 2"));
+    }
+
+    @Test
+    public void testToStringOutput() {
+        MoodTracker tracker = new MoodTracker1L();
+        tracker.logMood("happy", "listened to music");
+        String output = tracker.toString();
+        assertTrue(output.contains("Mood History"));
+        assertTrue(output.contains("happy"));
+    }
+
+    @Test
+    public void testToStringEmpty() {
+        MoodTracker tracker = new MoodTracker1L();
+        String output = tracker.toString();
+        assertTrue(output.contains("Mood History"));
+        assertFalse(output.contains("happy"));
+    }
+
+    @Test
+    public void testEqualsTrue() {
+        MoodTracker tracker1 = new MoodTracker1L();
+        MoodTracker tracker2 = new MoodTracker1L();
+        tracker1.logMood("stressed", "midterms coming up");
+        tracker2.logMood("stressed", "midterms coming up");
+        assertTrue(tracker1.equals(tracker2));
+    }
+
+    @Test
+    public void testEqualsFalse() {
+        MoodTracker tracker1 = new MoodTracker1L();
+        MoodTracker tracker2 = new MoodTracker1L();
+        tracker1.logMood("happy", "sunny day");
+        tracker2.logMood("sad", "rainy day");
+        assertFalse(tracker1.equals(tracker2));
+    }
+
+    @Test
+    public void testEqualsWithEmptyAndNonEmpty() {
+        MoodTracker tracker1 = new MoodTracker1L();
+        MoodTracker tracker2 = new MoodTracker1L();
+        tracker2.logMood("happy", "first entry");
+        assertFalse(tracker1.equals(tracker2));
+    }
+}

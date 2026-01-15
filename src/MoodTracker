@@ -1,0 +1,26 @@
+/**
+ * Enhanced interface for the MoodTracker component.
+ * Extends the core functionality of MoodTrackerKernel.
+ *
+ * @ensures This component provides extended mood tracking capabilities.
+ */
+public interface MoodTracker extends MoodTrackerKernel {
+
+    /**
+     * Returns a history of mood entries stored in the tracker.
+     *
+     * @return A sequence of past mood entries.
+     * @requires this.numberOfLogs() > 0
+     * @ensures getMoodHistory contains all past mood entries in FIFO order.
+     */
+    Queue<String> getMoodHistory();
+
+    /**
+     * Analyzes mood trends by classifying moods as positive or negative.
+     *
+     * @return A formatted string summary of mood trends.
+     * @requires this.numberOfLogs() > 0
+     * @ensures analyzeMoodTrends provides statistics on mood distribution.
+     */
+    String analyzeMoodTrends();
+}
